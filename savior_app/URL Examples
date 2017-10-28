@@ -9,12 +9,8 @@ lat longes
 
 
 
-#### URL SETUP 
+## EXAMPLE URL CALL ##
+
+http://localhost:8000/api/process/jim/45.34455/-34.6632/3/
 
 
-
-localhost:8000/api?vicID=v3&vicName=Joe
-
-url(r'^process/(?P<string>[\w\-]+)/$','views.process')
-
-path('process/<string:vicID>/<string:vicName>/', views.process),
