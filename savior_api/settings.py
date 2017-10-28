@@ -25,7 +25,7 @@ SECRET_KEY = 'k-m2bv*yu05fkb71dm^-_4=%viuk2ebg5y%k$7@+fly507*ie)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['arkapp.pythonanywhere.com']
 
 
 # Application definition
