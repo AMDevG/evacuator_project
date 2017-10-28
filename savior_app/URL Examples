@@ -1,0 +1,20 @@
+lat longes
+
+
+1: 29.752223, -95.221097
+2: 29.688118, -95.240667
+3: 29.688864, -95.255258
+4: 29.413096, -95.019782
+6: 29.400983, -95.040896
+
+
+
+#### URL SETUP 
+
+
+
+localhost:8000/api?vicID=v3&vicName=Joe
+
+url(r'^process/(?P<string>[\w\-]+)/$','views.process')
+
+path('process/<string:vicID>/<string:vicName>/', views.process),

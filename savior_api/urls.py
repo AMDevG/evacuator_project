@@ -24,5 +24,6 @@ router.register(r'api/processreq', views.EvacuatorViewSet)
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^',include(router.urls), name='home'),
+    url(r'^api/', include('savior_app.urls', namespace = "saviorapp")),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
