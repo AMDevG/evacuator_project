@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework import permissions
-from .models import Evacuator
+from .models import Evacuator, Victim
 from .serializers import EvacuatorSerializer
 from rest_framework.response import Response
 from django.http import HttpResponse
@@ -18,6 +18,9 @@ class EvacuatorViewSet(viewsets.ModelViewSet):
 def process(request, vicID, lat, lng, grpSize):
 	victim_information = {}
 	victim_coords = (lat, lng)
+	new_victim = Victim.objects.create(victimID=vicID, lat=lat, lng=lng, group_size=grpSize)
+	new_victim.save()
+
 	json_evac_info = findNearestEvacuator(victim_coords, grpSize)
 
 	return HttpResponse(json_evac_info, content_type="application/json")
@@ -65,6 +68,13 @@ def findNearestEvacuator(victimCoords, grpSize):
 	json_evac_info = json.dumps(evacuator_info)
 	
 	return json_evac_info
+
+
+def testMap(request):
+
+
+
+	return render(request, "map.html")
 
 
 

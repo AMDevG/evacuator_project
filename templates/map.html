@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Ark Map</title>
+    <style>
+            html, body {
+              height: 100%;
+              margin: 0;
+              padding: 0;
+            }
+            #map {
+              height: 100%;
+            }
+    </style>
+  </head>
+  <body>
+
+  <div id="map"></div>
+       <script>
+      function initMap() {
+        var victimLocation = {lat:29.400983, lng:-95.040896}  
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 10,
+          center: victimLocation
+        });
+        var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+     
+     var marker = new google.maps.Marker({
+          position: victimLocation,
+          map: map
+        });
+       }
+  </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANcvGgoQXN-HciSO4oTxZOCMLtr3u2mDo&callback=initMap"
+  type="text/javascript"></script>
+ </body>
+</html>

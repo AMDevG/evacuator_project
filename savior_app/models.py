@@ -12,3 +12,13 @@ class Evacuator(models.Model):
 
         def __str__(self):
             return '{}'.format(self.evacuatorID)
+
+class Victim(models.Model):
+        victimID = models.CharField(max_length=3, null=True, blank=True, default=None)
+        lat = models.CharField(max_length=20, null=True, blank=True, default=None)
+        lng = models.CharField(max_length=20, null=True, blank=True, default=None)
+        group_size= models.CharField(max_length=2, null=True, blank=True, default=None)
+        rescued = models.BooleanField(default=False)
+
+        def __str__(self):
+            return '{}'.format(self.victimID)
