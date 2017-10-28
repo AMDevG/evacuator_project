@@ -9,76 +9,62 @@ from rest_framework.response import Response
 from django.http import HttpResponse
 from django.core import serializers
 from geopy.distance import great_circle
+import json
 
 class EvacuatorViewSet(viewsets.ModelViewSet):
 	queryset = Evacuator.objects.all()
 	serializer_class = EvacuatorSerializer
 
-
 def process(request, vicID, lat, lng, grpSize):
-#def process(request, vicID, lat):
-	print("VicID Passed: ", vicID)
-	print("lat Passed: ", lat)
-	print("lng Passed: ", lng)
-	print("grpSize Passed: ", grpSize)
+	victim_information = {}
+	victim_coords = (lat, lng)
+	json_evac_info = findNearestEvacuator(victim_coords, grpSize)
 
-	findNearestEvacuator(grpSize)
-
-	
-	return HttpResponse("Vic ID: %s"%vicID)
-
+	return HttpResponse(json_evac_info, content_type="application/json")
 
 def calculateDistance(victimCoords, evacCords):
 	return great_circle(victimCoords, evacCords).miles
 
-
-
-def testDB():
-	for evacuator in Evacuator.objects.all():
-		print("Evacuator ", evacuator.evacuatorID)
-
-
-def findNearestEvacuator(grpSize):
+def findNearestEvacuator(victimCoords, grpSize):
 	group_size = int(grpSize)
 	available_evacuators = []
+	
 	min_dist = {}
-
-	victimCoords = (45.679,-51.456)
+	evacuator_info = {}
+	selected_key = ""
 
 	## Calculates evacs who have available space
 	for evacuator in Evacuator.objects.all():
 		capacity = int(evacuator.maxCapacity) - int(evacuator.currentCapacity)
-		print("Capacity is ",capacity)
 		if group_size <= capacity:
-			print("Adding to available evacuator")
 			available_evacuators.append(evacuator)
-			
+	
+	##Calculates closest available evacuator
 	for evacuator in available_evacuators:
 		evac_coords = (evacuator.lat, evacuator.lng)
 
 		if bool(min_dist) == False:
 			print("Setting mindist")
 			min_dist[evacuator.evacuatorID] = int(calculateDistance(victimCoords, evac_coords))
-
 		else:
-			print("Not first loop")
 			current_distance = int(calculateDistance(victimCoords, evac_coords))
-
 			for key in min_dist.keys():
 				if current_distance < min_dist[key]:
 					min_dist[evacuator.evacuatorID] = current_distance
-					print("Changin min distance to: ", current_distance)
 
-	print(min_dist)
+	### Creates JSON dict of dispatched for http response 
+	for key in min_dist:
+		selected_key = key
 
-
-
-
-
-
-
-
-
+	selected_evacuator = Evacuator.objects.get(evacuatorID=selected_key)
+	new_capacity = int(selected_evacuator.currentCapacity) + group_size
+	selected_evacuator.currentCapacity = str(new_capacity)
+	selected_evacuator.save()
+	
+	evacuator_info[selected_evacuator.evacuatorID] = {"lat":selected_evacuator.lat, "lng":selected_evacuator.lng, "currentCapacity":selected_evacuator.currentCapacity, "maxCapacity":selected_evacuator.maxCapacity, "distance":min_dist[selected_key]}
+	json_evac_info = json.dumps(evacuator_info)
+	
+	return json_evac_info
 
 
 
