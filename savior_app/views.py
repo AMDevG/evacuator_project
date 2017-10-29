@@ -41,6 +41,11 @@ def findNearestEvacuator(victimCoords, grpSize):
 		capacity = int(evacuator.maxCapacity) - int(evacuator.currentCapacity)
 		if group_size <= capacity:
 			available_evacuators.append(evacuator)
+
+	if len(available_evacuators) == 0:
+		json_evac_info = json.dumps({})
+		return json_evac_info
+
 	
 	##Calculates closest available evacuator
 	for evacuator in available_evacuators:
