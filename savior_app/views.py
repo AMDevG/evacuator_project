@@ -64,7 +64,7 @@ def findNearestEvacuator(victimCoords, grpSize):
 	selected_evacuator.currentCapacity = str(new_capacity)
 	selected_evacuator.save()
 	
-	evacuator_info[selected_evacuator.evacuatorID] = {"lat":selected_evacuator.lat, "lng":selected_evacuator.lng, "currentCapacity":selected_evacuator.currentCapacity, "maxCapacity":selected_evacuator.maxCapacity, "distance":min_dist[selected_key]}
+	evacuator_info = {"evacID": selected_evacuator.evacuatorID, "lat":selected_evacuator.lat, "lng":selected_evacuator.lng, "currentCapacity":selected_evacuator.currentCapacity, "maxCapacity":selected_evacuator.maxCapacity, "distance":min_dist[selected_key]}
 	json_evac_info = json.dumps(evacuator_info)
 	
 	return json_evac_info
