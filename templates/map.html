@@ -24,22 +24,45 @@
 
         var victimCoords = {{victimCoords}}
         var evacCoords = {{evacCoords}}
+        
+        var latitude = evacCoords[0][0];
+        var longitude = evacCoords[0][1];
+        var center_coord = {lat: latitude, lng: longitude};
 
-        console.log(victimCoords)
-        console.log(evacCoords)
-
-        var victimLocation = {lat:29.400983, lng:-95.040896}  
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 10,
-          center: victimLocation
+          center: center_coord
         });
-        var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-     
-     var marker = new google.maps.Marker({
-          position: victimLocation,
-          map: map
+        var marker = new google.maps.Marker({
+          position: center_coord,
+          map:  map,
+          icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+        });
+
+     for(i=1;i<evacCoords.length;i++){
+        var evac_lat = evacCoords[i][0]
+        var evac_lng = evacCoords[i][1]
+
+        var location = {lat: evac_lat, lng: evac_lng}
+        var marker = new google.maps.Marker({
+          position: location,
+          map: map,
+          icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
         });
        }
+
+      for(i=0;i<victimCoords.length;i++){
+        var vic_lat = victimCoords[i][0]
+        var vic_lng = victimCoords[i][1]
+
+        var location = {lat: vic_lat, lng: vic_lng}
+        var marker = new google.maps.Marker({
+          position: location,
+          map: map,
+          icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
+        });
+       }
+     }
   </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANcvGgoQXN-HciSO4oTxZOCMLtr3u2mDo&callback=initMap"
   type="text/javascript"></script>
