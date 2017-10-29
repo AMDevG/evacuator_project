@@ -73,8 +73,11 @@ def findNearestEvacuator(victimCoords, grpSize):
 def testMap(request):
 
 
+	victimCoords = [(41.567, -53.566), (42.3456, -51.345)]
+	evacCoords = [(41.567, -53.566), (42.3456, -51.345)]
 
-	return render(request, "map.html")
+
+	return render(request, "map.html", {'victimCoords':victimCoords, 'evacCoords': evacCoords})
 
 
 

@@ -21,6 +21,13 @@
   <div id="map"></div>
        <script>
       function initMap() {
+
+        var victimCoords = {{victimCoords}}
+        var evacCoords = {{evacCoords}}
+
+        console.log(victimCoords)
+        console.log(evacCoords)
+
         var victimLocation = {lat:29.400983, lng:-95.040896}  
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 10,
